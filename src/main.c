@@ -6,10 +6,7 @@
  * one at https://opensource.org/licenses/MIT.
  */
 
-#include <stdint.h>
-#include <libopencm3/stm32/rcc.h>
-#include <libopencm3/stm32/gpio.h>
-#include <libopencm3/stm32/usart.h>
+#include "headers_all.h"
 
 #define RCC_REG(i)    MMIO32(RCC_BASE + ((i) >> 5))
 #define RCC_BIT(i)	(1 << ((i) & 0x1f))

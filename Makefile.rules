@@ -59,6 +59,7 @@ BUILD_SUBDIRS := $(OBJ_DIR) $(BIN_DIR) $(LST_DIR)
 # Source files
 
 C_SRCS += src/main.c
+C_SRCS += src/led.c
 
 CPP_SRCS =
 
@@ -119,6 +120,7 @@ CFLAGS		+= -O3 -g
 CFLAGS		+= -Wextra -Wshadow -Wimplicit-function-declaration
 CFLAGS		+= -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS		+= -fno-common -ffunction-sections -fdata-sections
+CFLAGS		+= -Iinclude
 
 ###############################################################################
 # C++ flags
