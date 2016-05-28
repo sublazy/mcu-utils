@@ -3,12 +3,12 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/usart.h>
 
-#define RCC_REG(i)             MMIO32(RCC_BASE + ((i) >> 5))
-#define RCC_BIT(i)             (1 << ((i) & 0x1f))
+#define RCC_REG(i)    MMIO32(RCC_BASE + ((i) >> 5))
+#define RCC_BIT(i)	(1 << ((i) & 0x1f))
 
-#define UART_PORT		GPIOA
-#define UART_PIN_TX		GPIO9
-#define UART_PIN_RX		GPIO10
+#define UART_PORT     GPIOA
+#define UART_PIN_TX   GPIO9
+#define UART_PIN_RX   GPIO10
 
 void delay(uint32_t delay);
 static char get_char(void);
@@ -50,14 +50,14 @@ static void uart_init(void)
 static bool is_uart_tx_busy (uint32_t uart)
 {
 	if (USART_SR(uart) & USART_SR_TXE)
-        return false;
-    else
-        return true;
+		return false;
+	else
+		return true;
 }
 
 static char get_char()
 {
-  return (USART_DR(USART1));
+	return (USART_DR(USART1));
 }
 
 static void put_char(char c)
@@ -81,23 +81,22 @@ int main(void)
 		(GPIO_MODE_OUTPUT_2_MHZ << 8) |
 		(GPIO_MODE_OUTPUT_2_MHZ << 4);
 
-    GPIO_BSRR(GPIOB) |= 0x6;
+	GPIO_BSRR(GPIOB) |= 0x6;
 
 	uart_init();
 
-    for (int i = 0; i < 9; i++) {
-        GPIO_BSRR(GPIOB) |= 0x4;
-        delay(50000);
-        GPIO_BRR(GPIOB) |= 0x4;
-        delay(50000);
-    }
+	for (int i = 0; i < 9; i++) {
+		GPIO_BSRR(GPIOB) |= 0x4;
+		delay(50000);
+		GPIO_BRR(GPIOB) |= 0x4;
+		delay(50000);
+	}
 
 	while (1) {
-
-        GPIO_BSRR(GPIOB) |= 0x6;
+		GPIO_BSRR(GPIOB) |= 0x6;
 
 		if (is_char_incoming()) {
-            GPIO_BRR(GPIOB) |= 0x6;
+			GPIO_BRR(GPIOB) |= 0x6;
 			char c = get_char();
 			put_char(c);
 		}
