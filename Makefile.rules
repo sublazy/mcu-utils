@@ -57,11 +57,31 @@ BUILD_SUBDIRS := $(OBJ_DIR) $(BIN_DIR) $(LST_DIR)
 ###############################################################################
 # Source files
 
-LDSCRIPT	?= $(LD_DIR)/zl31.ld
+C_SRCS += src/main.c
 
-OBJS		+= $(OBJ_DIR)/$(BINARY).o
-#OBJS		+= main.o
+CPP_SRCS =
 
+SRC_DIRS := $(shell find $(SRC_DIR) -type d)
+
+# Here the compiler looks for the source files.
+VPATH := $(SRC_DIRS)
+
+###############################################################################
+# Object files
+
+C_OBJS := $(subst .c,.o, \
+	$(foreach file, $(C_SRCS), \
+	$(subst $(dir $(file)), $(OBJ_DIR)/, $(file))))
+
+CPP_OBJS := $(subst .cpp,.o, \
+	$(foreach file, $(CPP_SRCS), \
+	$(subst $(dir $(file)), $(OBJ_DIR)/, $(file))))
+
+OBJS := $(C_OBJS) $(CPP_OBJS)
+
+###############################################################################
+
+# Memory map of resultant program
 MAP_FILE	= $(LST_DIR)/$(BINARY).map
 
 # List of all dependency files.
@@ -114,6 +134,8 @@ CPPFLAGS	+= -I$(INCLUDE_DIR) $(DEFS)
 
 ###############################################################################
 # Linker flags
+
+LDSCRIPT	?= $(LD_DIR)/zl31.ld
 
 LDFLAGS		+= --static -nostartfiles
 LDFLAGS		+= -L$(LIB_DIR)
@@ -205,6 +227,9 @@ styleclean: $(STYLECHECKFILES:=.styleclean)
 %.styleclean:
 	$(Q)rm -f $*.stylecheck;
 
+print_sources:
+	@echo C_SRCS = $(C_SRCS)
+	@echo CPP_SRCS = $(CPP_SRCS)
 
 print_objects:
 	@echo OBJS = $(OBJS)
@@ -215,6 +240,7 @@ print_dependencies:
 print_vars:
 	@echo LDSCRIPT = $(LDSCRIPT)
 	@echo BUILD_SUBDIRS = $(BUILD_SUBDIRS)
+	@echo VPATH = $(VPATH)
 
 %.stlink-flash: %.bin
 	@printf "  FLASH  $<\n"
