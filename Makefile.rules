@@ -60,6 +60,7 @@ BUILD_SUBDIRS := $(OBJ_DIR) $(BIN_DIR) $(LST_DIR)
 
 C_SRCS += src/main.c
 C_SRCS += src/led.c
+C_SRCS += src/timers.c
 
 CPP_SRCS =
 

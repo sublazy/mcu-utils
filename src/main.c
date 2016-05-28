@@ -12,15 +12,8 @@
 #define UART_PIN_TX   GPIO9
 #define UART_PIN_RX   GPIO10
 
-void delay(uint32_t delay);
 static char get_char(void);
 static int is_char_incoming(void);
-
-void delay(uint32_t delay)
-{
-	volatile uint32_t d = delay;
-	while(d--);
-}
 
 static void uart_init(void)
 {
@@ -79,11 +72,11 @@ int main(void)
 	led_init();
 	uart_init();
 
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 3; i++) {
 		led_on (0);
-		delay(50000);
+		tim_delay_soft(50000);
 		led_off (0);
-		delay(50000);
+		tim_delay_soft(50000);
 	}
 
 	while (1) {

@@ -19,4 +19,8 @@
 #define RCC_REG(i)  MMIO32(RCC_BASE + ((i) >> 5))
 #define RCC_BIT(i)  (1 << ((i) & 0x1f))
 
+// Syntactic sugar for conditional compilation.
+// Inspired by linux kernel and Kconfig.
+#define IS_ENABLED(tok_1_or_0)  (tok_1_or_0)
+
 #endif // MISC_H
