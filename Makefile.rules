@@ -38,6 +38,7 @@ AR		:= $(PREFIX)-ar
 AS		:= $(PREFIX)-as
 OBJCOPY		:= $(PREFIX)-objcopy
 OBJDUMP		:= $(PREFIX)-objdump
+SIZE		:= $(PREFIX)-size
 GDB		:= $(PREFIX)-gdb
 STFLASH		= $(shell which st-flash)
 STYLECHECK	:= /checkpatch.pl
@@ -167,6 +168,7 @@ LDLIBS		+= -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 
 all: target_elf target_bin target_list
 
+print_size: $(BIN_DIR)/$(BINARY).elf
 target_elf: $(BIN_DIR)/$(BINARY).elf
 target_bin: $(BIN_DIR)/$(BINARY).bin
 target_hex: $(BIN_DIR)/$(BINARY).hex
@@ -199,6 +201,8 @@ $(LST_DIR)/%.list: $(BIN_DIR)/%.elf | $(BUILD_SUBDIRS)
 $(BIN_DIR)/%.elf: $(OBJS) $(LDSCRIPT) | $(BIN_DIR)
 	@printf "  LD      $@\n"
 	$(Q)$(LD) $(LDFLAGS) $(ARCH_FLAGS) $(OBJS) $(LDLIBS) -o $@
+	@printf "  SIZE    $@\n"
+	$(Q)$(SIZE) $(BIN_DIR)/$(BINARY).elf
 
 $(OBJ_DIR)/%.o: %.c | $(BUILD_SUBDIRS)
 	@printf "  CC      $(*).c\n"
@@ -231,6 +235,10 @@ styleclean: $(STYLECHECKFILES:=.styleclean)
 
 %.styleclean:
 	$(Q)rm -f $*.stylecheck;
+
+print_size: $(BIN_DIR)/$(BINARY).elf
+	@printf "  SIZE    $<\n"
+	$(Q)$(SIZE) $(BIN_DIR)/$(BINARY).elf
 
 print_sources:
 	@echo C_SRCS = $(C_SRCS)
@@ -294,6 +302,7 @@ $(BUILD_SUBDIRS):
 	$(Q)mkdir -p $(BUILD_SUBDIRS)
 
 .PHONY: all clean stylecheck styleclean create_subdirs \
-		target_elf target_bin target_hex target_srec target_list
+	target_elf target_bin target_hex target_srec target_list
+
 
 -include $(DEPS)
