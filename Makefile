@@ -31,8 +31,7 @@ ARCH_FLAGS	= -mthumb -mcpu=cortex-m3 $(FP_FLAGS) -mfix-cortex-m3-ldrd
 # OpenOCD specific variables
 
 OOCD		?= openocd
-OOCD_INTERFACE	?= stlink-v1
-OOCD_BOARD	?= stm32f1x
+OOCD_CONFIG	?= zl31.cfg
 
 ################################################################################
 # texane/stlink specific variables
