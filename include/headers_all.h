@@ -12,5 +12,6 @@
 #include "headers_std.h"
 #include "headers_locm3.h"
 #include "led.h"
+#include "misc.h"
 
 #endif // HEADERS_ALL_H

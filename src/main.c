@@ -8,9 +8,6 @@
 
 #include "headers_all.h"
 
-#define RCC_REG(i)    MMIO32(RCC_BASE + ((i) >> 5))
-#define RCC_BIT(i)	(1 << ((i) & 0x1f))
-
 #define UART_PORT     GPIOA
 #define UART_PIN_TX   GPIO9
 #define UART_PIN_RX   GPIO10
@@ -79,29 +76,21 @@ static int is_char_incoming()
 
 int main(void)
 {
-	RCC_REG(RCC_GPIOB) |= RCC_BIT(RCC_GPIOB);
-
-	GPIO_CRL(GPIOB) &= ~0xFF0;
-	GPIO_CRL(GPIOB) |=
-		(GPIO_MODE_OUTPUT_2_MHZ << 8) |
-		(GPIO_MODE_OUTPUT_2_MHZ << 4);
-
-	GPIO_BSRR(GPIOB) |= 0x6;
-
+	led_init();
 	uart_init();
 
 	for (int i = 0; i < 9; i++) {
-		GPIO_BSRR(GPIOB) |= 0x4;
+		led_on (0);
 		delay(50000);
-		GPIO_BRR(GPIOB) |= 0x4;
+		led_off (0);
 		delay(50000);
 	}
 
 	while (1) {
-		GPIO_BSRR(GPIOB) |= 0x6;
+		led_off (0);
 
 		if (is_char_incoming()) {
-			GPIO_BRR(GPIOB) |= 0x6;
+			led_on (0);
 			char c = get_char();
 			put_char(c);
 		}
