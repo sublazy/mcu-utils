@@ -219,7 +219,6 @@ $(OBJ_DIR)/%.o: %.cpp | $(BUILD_SUBDIRS)
 
 clean:
 	@printf "  CLEAN\n"
-	$(Q)$(RM) *.o *.d *.elf *.bin *.hex *.srec *.list *.map
 	$(Q) rm -rf $(BUILD_SUBDIRS)
 
 stylecheck: $(STYLECHECKFILES:=.stylecheck)
