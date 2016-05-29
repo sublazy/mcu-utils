@@ -5,12 +5,15 @@ MEMORY
     ram (rwx) : ORIGIN = 0x20000200, LENGTH = 20K - 0x200
 }
 
+/* Enforce emission of the vector table. */
+EXTERN (vector_table)
+
 ENTRY(reset_handler)
 
 SECTIONS
 {
-    .text.vectors : {
-        *(.text.vectors*)
+    .vectors : {
+        *(.data.vector_table)
         . = ALIGN(4);
     } > ram_vt
 
@@ -32,3 +35,5 @@ SECTIONS
     } > ram
 
 }
+
+PROVIDE(_stack = ORIGIN(ram) + LENGTH(ram));
