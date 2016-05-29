@@ -144,8 +144,6 @@ CPPFLAGS	+= -I$(INCLUDE_DIR) $(DEFS)
 ###############################################################################
 # Linker flags
 
-LDSCRIPT	?= $(LD_DIR)/zl31.ld
-
 LDFLAGS		+= --static -nostartfiles
 LDFLAGS		+= -L$(LIB_DIR)
 LDFLAGS		+= -T$(LDSCRIPT)
@@ -261,6 +259,14 @@ print_vars:
 %.stlink-flash: %.bin
 	@printf "  FLASH  $<\n"
 	$(Q)$(STFLASH) write $(*).bin 0x8000000
+
+upload: $(BIN_DIR)/$(BINARY).elf
+	@printf "  UPLOAD  $<\n"
+	$(Q)$(OOCD) -f $(OOCD_CONFIG) \
+		    -c "init; reset halt" \
+		    -c "load_image $<" \
+		    -c "reset run" \
+		    -c "shutdown" $(NULL)
 
 ifeq ($(STLINK_PORT),)
 ifeq ($(BMP_PORT),)

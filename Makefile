@@ -19,7 +19,7 @@
 
 BINARY = main
 
-LDSCRIPT = ld/zl31.ld
+LDSCRIPT = ld/link_ram.ld
 
 LIBNAME		= opencm3_stm32f1
 DEFS		+= -DSTM32F1
