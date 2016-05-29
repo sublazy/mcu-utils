@@ -122,7 +122,10 @@ CFLAGS		+= -O3 -g
 CFLAGS		+= -Wextra -Wshadow -Wimplicit-function-declaration
 CFLAGS		+= -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS		+= -fno-common -ffunction-sections -fdata-sections
-CFLAGS		+= -Iinclude
+CFLAGS		+= -Iinclude -Ilibopencm3/include
+
+# Dump defines, stop after preprocessing.
+# CFLAGS		+= -dM -E
 
 ###############################################################################
 # C++ flags

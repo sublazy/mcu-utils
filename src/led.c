@@ -19,32 +19,31 @@ typedef struct led_class {
 void
 led_init(void)
 {
-	RCC_REG(RCC_GPIOB) |= RCC_BIT(RCC_GPIOB);
+	rcc_periph_clock_enable (RCC_GPIOB);
 
-	GPIO_CRL(GPIOB) &= ~0xFF0;
-	GPIO_CRL(GPIOB) |=
-		(GPIO_MODE_OUTPUT_2_MHZ << 8) |
-		(GPIO_MODE_OUTPUT_2_MHZ << 4);
+	gpio_set_mode (GPIOB, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL,
+			GPIO1 | GPIO2);
 
-	GPIO_BSRR(GPIOB) |= 0x6;
+	gpio_set (GPIOB, GPIO1 | GPIO2);
 }
 
 void
 led_on (uint32_t id)
 {
 	(void)id;
-	GPIO_BRR(GPIOB) |= 0x6;
+	gpio_clear (GPIOB, GPIO1 | GPIO2);
 }
 
 void
 led_off (uint32_t id)
 {
 	(void)id;
-	GPIO_BSRR(GPIOB) |= 0x6;
+	gpio_set (GPIOB, GPIO1 | GPIO2);
 }
 
 void
 led_toggle (uint32_t id)
 {
 	(void)id;
+	gpio_toggle (GPIOB, GPIO1 | GPIO2);
 }

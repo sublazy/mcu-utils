@@ -72,10 +72,8 @@ int main(void)
 	led_init();
 	uart_init();
 
-	for (int i = 0; i < 3; i++) {
-		led_on (0);
-		tim_delay_soft(50000);
-		led_off (0);
+	for (int i = 0; i < 10; i++) {
+		led_toggle (0);
 		tim_delay_soft(50000);
 	}
 
