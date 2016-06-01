@@ -11,13 +11,14 @@
 
 #include "headers_all.h"
 
-enum led_id {
-	LED_ID_STATUS,
-	LED_ID_COMM,
-	LED_ID_LAST,
-};
+typedef struct led_t led_t;
 
-void led_init(void);
+#define NOF_LEDS  2
+
+led_t* led_new (uint32_t gpioport, uint16_t gpiobit, int id, bool is_active_low);
+led_t* led_get (int led_id);
+
+void led_init (void);
 void led_on (uint32_t id);
 void led_off (uint32_t id);
 void led_toggle (uint32_t id);
