@@ -69,7 +69,7 @@ rcc_of_gpio (uint32_t gpioport)
 /* Public routines
  * --------------------------------------------------------------------------- */
 led_t*
-led_new (uint32_t gpioport, uint16_t gpiobit, int id, bool is_active_low)
+led_new (int id, uint32_t gpioport, uint16_t gpiobit, bool is_active_low)
 {
 	assert (leds_in_use < NOF_LEDS);
 

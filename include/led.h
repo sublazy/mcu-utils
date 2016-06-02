@@ -15,7 +15,7 @@ typedef struct led_t led_t;
 
 #define NOF_LEDS  2
 
-led_t* led_new (uint32_t gpioport, uint16_t gpiobit, int id, bool is_active_low);
+led_t* led_new (int id, uint32_t gpioport, uint16_t gpiobit, bool is_active_low);
 led_t* led_get (int led_id);
 
 void led_init (void);
