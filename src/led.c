@@ -8,10 +8,15 @@
 
 #include "headers_all.h"
 
+// Assert handler not implemented yet in this project.
+#ifdef assert
+#undef assert
+#define assert(condition) do { } while (0)
+#endif
+
 /* Private types
  * --------------------------------------------------------------------------- */
 typedef struct led_t {
-	int id;
 	uint32_t gpio;
 	uint16_t gpiobit;
 	bool is_on;
