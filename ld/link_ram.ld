@@ -18,6 +18,8 @@ SECTIONS
     } > ram_vt
 
     .text : {
+	*(.text.reset_handler)
+        . = ALIGN(4);
         *(.text*)
         . = ALIGN(4);
     } > ram
@@ -25,15 +27,20 @@ SECTIONS
     .data : {
 	_data = .;
 	*(.data*)
+	. = ALIGN(4);
 	_edata = .;
     } > ram
     _data_loadaddr = LOADADDR(.data);
 
     .bss : {
 	*(.bss*)
+	*(COMMON)
 	_ebss = .;
+	. = ALIGN(4);
     } > ram
 
+    . = ALIGN(4);
+    end = .;
 }
 
 PROVIDE(_stack = ORIGIN(ram) + LENGTH(ram));
