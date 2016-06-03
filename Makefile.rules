@@ -197,7 +197,7 @@ $(BIN_DIR)/%.srec: $(BIN_DIR)/%.elf | $(BIN_DIR)
 
 $(LST_DIR)/%.list: $(BIN_DIR)/%.elf | $(BUILD_SUBDIRS)
 	@printf "  OBJDUMP $@\n"
-	$(Q)$(OBJDUMP) -S $< > $@
+	$(Q)$(OBJDUMP) -dh $< > $@
 
 $(BIN_DIR)/%.elf: $(OBJS) $(LDSCRIPT) | $(BIN_DIR)
 	@printf "  LD      $@\n"
