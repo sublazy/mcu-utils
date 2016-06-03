@@ -74,14 +74,13 @@ rcc_of_gpio (uint32_t gpioport)
 /* Public routines
  * --------------------------------------------------------------------------- */
 led_t*
-led_new (int id, uint32_t gpioport, uint16_t gpiobit, bool is_active_low)
+led_new (uint32_t gpioport, uint16_t gpiobit, bool is_active_low)
 {
 	assert (leds_in_use < NOF_LEDS);
 
 	uint32_t new_led_idx = leds_in_use;
 	led_t *led = &led_pool[new_led_idx];
 
-	led->id = id;
 	led->gpio = gpioport;
 	led->gpiobit = gpiobit;
 	led->is_active_low = is_active_low;
@@ -96,37 +95,37 @@ led_new (int id, uint32_t gpioport, uint16_t gpiobit, bool is_active_low)
 
 	leds_in_use++;
 	assert (led);
+	led_off (led);
 	return led;
 }
 
 void
-led_init(void)
+led_on (led_t *led)
 {
-	rcc_periph_clock_enable (RCC_GPIOB);
+	if (!led->is_active_low) {
+		gpio_set (led->gpio, led->gpiobit);
+	} else {
+		gpio_clear (led->gpio, led->gpiobit);
+	}
 
-	gpio_set_mode (GPIOB, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL,
-			GPIO1 | GPIO2);
-
-	gpio_set (GPIOB, GPIO1 | GPIO2);
+	led->is_on = true;
 }
 
 void
-led_on (uint32_t id)
+led_off (led_t *led)
 {
-	(void)id;
-	gpio_clear (GPIOB, GPIO1 | GPIO2);
+	if (!led->is_active_low) {
+		gpio_clear (led->gpio, led->gpiobit);
+	} else {
+		gpio_set (led->gpio, led->gpiobit);
+	}
+
+	led->is_on = false;
 }
 
 void
-led_off (uint32_t id)
+led_toggle (led_t *led)
 {
-	(void)id;
-	gpio_set (GPIOB, GPIO1 | GPIO2);
-}
-
-void
-led_toggle (uint32_t id)
-{
-	(void)id;
-	gpio_toggle (GPIOB, GPIO1 | GPIO2);
+	gpio_toggle (led->gpio, led->gpiobit);
+	led->is_on = !led->is_on;
 }

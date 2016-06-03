@@ -69,19 +69,21 @@ static int is_char_incoming()
 
 int main(void)
 {
-	led_init();
 	uart_init();
 
+	led_t *led1 = led_new(GPIOB, GPIO1, true);
+	led_t *led2 = led_new(GPIOB, GPIO2, true);
+
 	for (int i = 0; i < 10; i++) {
-		led_toggle (0);
+		led_toggle (led2);
 		tim_delay_soft(50000);
 	}
 
 	while (1) {
-		led_off (0);
+		led_off (led1);
 
 		if (is_char_incoming()) {
-			led_on (0);
+			led_on (led1);
 			char c = get_char();
 			put_char(c);
 		}

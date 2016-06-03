@@ -15,13 +15,11 @@ typedef struct led_t led_t;
 
 #define NOF_LEDS  2
 
-led_t* led_new (int id, uint32_t gpioport, uint16_t gpiobit, bool is_active_low);
-led_t* led_get (int led_id);
+led_t* led_new (uint32_t gpioport, uint16_t gpiobit, bool is_active_low);
 
-void led_init (void);
-void led_on (uint32_t id);
-void led_off (uint32_t id);
-void led_toggle (uint32_t id);
+void led_on (led_t *led);
+void led_off (led_t *led);
+void led_toggle (led_t *led);
 
 
 #endif // LED_H
