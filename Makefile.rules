@@ -203,13 +203,13 @@ $(LST_DIR)/%.list: $(BIN_DIR)/%.elf | $(BUILD_SUBDIRS)
 	@printf "  OBJDUMP $@\n"
 	$(Q)$(OBJDUMP) -dh $< > $@
 
-$(BIN_DIR)/%.elf: $(OBJS) $(LDSCRIPT) | $(BIN_DIR)
+$(BIN_DIR)/%.elf: $(OBJS) $(LDSCRIPT) Makefile.rules | $(BIN_DIR)
 	@printf "  LD      $@\n"
 	$(Q)$(LD) $(LDFLAGS) $(ARCH_FLAGS) $(OBJS) $(LDLIBS) -o $@
 	@printf "  SIZE    $@\n"
 	$(Q)$(SIZE) $(BIN_DIR)/$(BINARY).elf
 
-$(OBJ_DIR)/%.o: %.c | $(BUILD_SUBDIRS)
+$(OBJ_DIR)/%.o: %.c Makefile.rules | $(BUILD_SUBDIRS)
 	@printf "  CC      $(*).c\n"
 	$(Q)$(CC) $(CFLAGS) $(CPPFLAGS) $(ARCH_FLAGS) -o $@ -c $<
 
