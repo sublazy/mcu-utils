@@ -130,13 +130,6 @@ CFLAGS		+= --specs=nano.specs
 # CFLAGS		+= -dM -E
 
 ###############################################################################
-# C++ flags
-
-CXXFLAGS	+= -Os -g
-CXXFLAGS	+= -Wextra -Wshadow -Wredundant-decls  -Weffc++
-CXXFLAGS	+= -fno-common -ffunction-sections -fdata-sections
-
-###############################################################################
 # C & C++ preprocessor common flags
 
 CPPFLAGS	+= -MD
@@ -212,14 +205,6 @@ $(BIN_DIR)/%.elf: $(OBJS) $(LDSCRIPT) Makefile.rules | $(BIN_DIR)
 $(OBJ_DIR)/%.o: %.c Makefile.rules | $(BUILD_SUBDIRS)
 	@printf "  CC      $(*).c\n"
 	$(Q)$(CC) $(CFLAGS) $(CPPFLAGS) $(ARCH_FLAGS) -o $@ -c $<
-
-$(OBJ_DIR)/%.o: %.cxx | $(BUILD_SUBDIRS)
-	@printf "  CXX     $(*).cxx\n"
-	$(Q)$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(ARCH_FLAGS) -o $@ -c $<
-
-$(OBJ_DIR)/%.o: %.cpp | $(BUILD_SUBDIRS)
-	@printf "  CXX     $(*).cpp\n"
-	$(Q)$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(ARCH_FLAGS) -o $@ -c $<
 
 clean:
 	@printf "  CLEAN\n"
