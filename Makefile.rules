@@ -123,6 +123,7 @@ CFLAGS		+= -Wextra -Wshadow -Wimplicit-function-declaration
 CFLAGS		+= -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS		+= -fno-common -ffunction-sections -fdata-sections
 CFLAGS		+= -Iinclude -Ilibopencm3/include
+CFLAGS		+= --specs=nano.specs
 
 # Dump defines, stop after preprocessing.
 # CFLAGS		+= -dM -E
@@ -149,6 +150,8 @@ LDFLAGS		+= -L$(LIB_DIR)
 LDFLAGS		+= -T$(LDSCRIPT)
 LDFLAGS		+= -Wl,-Map=$(MAP_FILE)
 LDFLAGS		+= -Wl,--gc-sections
+LDFLAGS		+= --specs=nano.specs
+
 ifeq ($(V),99)
 LDFLAGS		+= -Wl,--print-gc-sections
 endif
