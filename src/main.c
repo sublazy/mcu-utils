@@ -12,10 +12,9 @@
 #define UART_PIN_TX   GPIO9
 #define UART_PIN_RX   GPIO10
 
-static char get_char(void);
 static int is_char_incoming(void);
 
-static void uart_init(void)
+static void stdio_init(void)
 {
 	RCC_REG(RCC_USART1) |= RCC_BIT(RCC_USART1);
 	RCC_REG(RCC_GPIOA) |= RCC_BIT(RCC_GPIOA);
@@ -42,51 +41,31 @@ static void uart_init(void)
 	USART_CR1(USART1) |= USART_CR1_UE;
 }
 
-static bool is_uart_tx_busy (uint32_t uart)
-{
-	if (USART_SR(uart) & USART_SR_TXE)
-		return false;
-	else
-		return true;
-}
-
-static char get_char()
-{
-	return (USART_DR(USART1));
-}
-
-static void put_char(char c)
-{
-	while (is_uart_tx_busy(USART1))
-		;
-	USART_DR(USART1) = c;
-}
-
 static int is_char_incoming()
 {
 	return (USART_SR(USART1) & USART_SR_RXNE);
 }
 
+/* Main program
+ * --------------------------------------------------------------------------- */
 int main(void)
 {
-	uart_init();
+	stdio_init();
+	printf ("\r\nReset ****************\r\n");
 
 	led_t *led1 = led_new(GPIOB, GPIO1, true);
 	led_t *led2 = led_new(GPIOB, GPIO2, true);
 
 	for (int i = 0; i < 10; i++) {
 		led_toggle (led2);
-		tim_delay_soft(50000);
+		printf ("blink %d\r\n", i);
+		tim_delay_soft(500000);
 	}
 
 	while (1) {
-		led_off (led1);
-
-		if (is_char_incoming()) {
-			led_on (led1);
-			char c = get_char();
-			put_char(c);
-		}
+		static int i = -100000;
+		printf ("%d\r\n", i++);
+		tim_delay_soft(50000);
 	}
 	return 0;
 }
