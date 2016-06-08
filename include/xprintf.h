@@ -2,15 +2,22 @@
 /* Universal string handler for user console interface  (C)ChaN, 2011     */
 /*------------------------------------------------------------------------*/
 
-#ifndef _STRFUNC
-#define _STRFUNC
+#ifndef XPRINTF_H
+#define XPRINTF_H
 
-#define _USE_XFUNC_OUT	1	/* 1: Use output functions */
-#define	_CR_CRLF		1	/* 1: Convert \n ==> \r\n in the output char */
+#include "headers_all.h"
 
-#define _USE_XFUNC_IN	1	/* 1: Use input function */
-#define	_LINE_ECHO		1	/* 1: Echo back input chars in xgets function */
+#define _USE_XFUNC_OUT  1       /* 1: Use output functions */
+#define _CR_CRLF        1       /* 1: Convert \n ==> \r\n in the output char */
 
+#define _USE_XFUNC_IN   0       /* 1: Use input function */
+#define _LINE_ECHO      1       /* 1: Echo back input chars in xgets function */
+
+
+#if !defined (PROJ_CFG_STD_PRINTF)
+#define PROJ_CFG_STD_PRINTF	0
+#define PROJ_CFG_OWN_PRINTF    (!PROJ_CFG_STD_PRINTF)
+#endif
 
 #if _USE_XFUNC_OUT
 #define xdev_out(func) xfunc_out = (void(*)(unsigned char))(func)
@@ -35,4 +42,19 @@ int xfgets (unsigned char (*func)(void), char* buff, int len);
 int xatoi (char** str, long* res);
 #endif
 
+
+#if IS_ENABLED (PROJ_CFG_OWN_PRINTF)
+#ifdef putc
+#undef putc
+#define putc    xputc
 #endif
+
+#define puts	xputs
+#define fputs	xfputs
+#define printf  xprintf
+#define sprintf xsprintf
+#define fprintf xfprintf
+#else
+#endif // IS_ENABLED (PROJ_CFG_OWN_PRINTF)
+
+#endif // XPRINTF_H

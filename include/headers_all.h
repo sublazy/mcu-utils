@@ -11,6 +11,7 @@
 
 #include "headers_std.h"
 #include "headers_locm3.h"
+#include "config.h"
 #include "led.h"
 #include "timers.h"
 #include "misc.h"

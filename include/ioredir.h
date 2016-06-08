@@ -9,6 +9,6 @@
 #ifndef IOREDIR_H
 #define IOREDIR_H
 
-void put_char(char c);
+void put_char(unsigned char c);
 
 #endif // IOREDIR_H
