@@ -6,15 +6,9 @@
  * one at https://opensource.org/licenses/MIT.
  */
 
-#ifndef HEADERS_ALL_H
-#define HEADERS_ALL_H
+#ifndef IOREDIR_H
+#define IOREDIR_H
 
-#include "headers_std.h"
-#include "headers_locm3.h"
-#include "led.h"
-#include "timers.h"
-#include "misc.h"
-#include "ioredir.h"
-#include "xprintf.h"
+void put_char(char c);
 
-#endif // HEADERS_ALL_H
+#endif // IOREDIR_H

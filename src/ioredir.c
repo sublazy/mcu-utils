@@ -34,7 +34,7 @@ static bool is_uart_tx_busy (uint32_t uart)
 		return true;
 }
 
-static void put_char(char c)
+void put_char(char c)
 {
 	while (is_uart_tx_busy(UART))
 		;

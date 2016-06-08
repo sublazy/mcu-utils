@@ -63,6 +63,7 @@ C_SRCS += src/main.c
 C_SRCS += src/led.c
 C_SRCS += src/timers.c
 C_SRCS += src/ioredir.c
+C_SRCS += src/xprintf.c
 
 CPP_SRCS =
 
