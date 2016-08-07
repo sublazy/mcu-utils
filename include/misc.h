@@ -15,6 +15,8 @@
 #ifndef MISC_H
 #define MISC_H
 
+#include "headers_all.h"
+
 // Macros from libopencm3, not shared via public headers.
 #define RCC_REG(i)  MMIO32(RCC_BASE + ((i) >> 5))
 #define RCC_BIT(i)  (1 << ((i) & 0x1f))
@@ -22,5 +24,10 @@
 // Syntactic sugar for conditional compilation.
 // Inspired by linux kernel and Kconfig.
 #define IS_ENABLED(tok_1_or_0)  (tok_1_or_0)
+
+/* Public routines
+ * --------------------------------------------------------------------------- */
+enum rcc_periph_clken
+	rcc_of_gpio (uint32_t gpioport);
 
 #endif // MISC_H
