@@ -14,29 +14,25 @@
 
 static void stdio_init(void)
 {
-	RCC_REG(RCC_USART1) |= RCC_BIT(RCC_USART1);
-	RCC_REG(RCC_GPIOA) |= RCC_BIT(RCC_GPIOA);
-	RCC_REG(RCC_AFIO) |= RCC_BIT(RCC_AFIO);
+	// TODO Give each module a 'required_clocks' parameter.
+	// E.g. tty_required_clocks = RCC_USART1 | RCC_GPIOA | RCC_AFIO;
+	rcc_periph_clock_enable(RCC_USART1);
+	rcc_periph_clock_enable(RCC_GPIOA);
+	rcc_periph_clock_enable(RCC_AFIO);
 
-	GPIO_CRH(UART_PORT) =
-		(GPIO_MODE_OUTPUT_2_MHZ << 4) |
-		(GPIO_CNF_OUTPUT_ALTFN_PUSHPULL	<< 6) |
-		(GPIO_MODE_OUTPUT_2_MHZ << 8) |
-		(GPIO_CNF_OUTPUT_ALTFN_PUSHPULL	<< 10) ;
+	gpio_set_mode(UART_PORT,
+		      GPIO_MODE_OUTPUT_2_MHZ,
+		      GPIO_CNF_OUTPUT_ALTFN_PUSHPULL,
+		      UART_PIN_TX | UART_PIN_RX);
 
-	USART_CR1(USART1) =
-		USART_CR1_RE |
-		USART_CR1_TE ;
-
-	USART_CR2(USART1) =
-		USART_CR2_STOPBITS_1;
-
-	uint32_t usart_clk = 8000000;
+	uint32_t mode = USART_MODE_TX_RX;
 	uint32_t baud = 115200;
+	uint32_t nof_stopbits = 1;
 
-	USART_BRR(USART1) = ((2 * usart_clk) + baud) / (2 * baud);
-
-	USART_CR1(USART1) |= USART_CR1_UE;
+	usart_set_mode(USART1, mode);
+	usart_set_baudrate(USART1, baud);
+	usart_set_stopbits(USART1, nof_stopbits);
+	usart_enable(USART1);
 }
 
 /* Main program
