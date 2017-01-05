@@ -13,6 +13,7 @@
 #include "headers_locm3.h"
 #include "config.h"
 #include "led.h"
+#include "tty.h"
 #include "timers.h"
 #include "misc.h"
 #include "ioredir.h"

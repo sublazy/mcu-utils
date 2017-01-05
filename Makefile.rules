@@ -62,6 +62,7 @@ BUILD_SUBDIRS := $(OBJ_DIR) $(BIN_DIR) $(LST_DIR)
 C_SRCS += src/main.c
 C_SRCS += src/misc.c
 C_SRCS += src/led.c
+C_SRCS += src/tty.c
 C_SRCS += src/timers.c
 C_SRCS += src/ioredir.c
 C_SRCS += src/xprintf.c
