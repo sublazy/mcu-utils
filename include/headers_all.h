@@ -12,6 +12,8 @@
 #include "headers_std.h"
 #include "headers_locm3.h"
 #include "config.h"
+// TODO gather platform-specific includes in a separate file?
+#include "led_zl31.h"
 #include "led.h"
 #include "tty.h"
 #include "timers.h"

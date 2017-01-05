@@ -93,3 +93,10 @@ led_toggle (led_t *led)
 	gpio_toggle (led->gpio, led->gpiobit);
 	led->is_on = !led->is_on;
 }
+
+led_t*
+led_get_obj(led_id_t led_id)
+{
+	assert (led_id < NOF_LEDS);
+	return &led_pool[led_id];
+}
