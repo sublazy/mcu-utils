@@ -30,3 +30,22 @@ void led_platform_init(void);
 #endif // LED_$(board.NAME)_H
 \
 .close
+\
+.output "src/led_$(board.name).c"
+\
+/* $(license:block,no) */
+
+/* $(gen_warning:no,justify,block%-66s) */
+// TODO: List the files used for generation.
+
+#include "headers_all.h"
+
+void led_platform_init(void)
+{
+        bool active_low;
+.   for board->leds
+.       is_active_low = ("$(polarity)" = "negative") ?? "true" ? "false"
+        led_new(GPIO$(PORT), GPIO$(pin), active_low = $(is_active_low));
+.   endfor
+}
+.close
