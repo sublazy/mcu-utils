@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Copyright (c) 2016-2017 Cezary Salbut
+
+This file is subject to the terms of the MIT license. If a copy of
+the MIT license was not distributed with this file, You can obtain
+one at https://opensource.org/licenses/MIT.
+-->
+
+<clock_tree>
+
+  <clock name = "SYSCLK" f_max_mhz = "72">
+
+    <prescaler name = "AHB" div_min = "1" div_max = "512">
+
+      <clock name = "HCLK">
+        <periph> DMA1 </periph>
+        <periph> DMA2 </periph>
+        <periph> AHB </periph>
+      </clock>
+
+      <clock name = "FSMCCLK">
+        <periph> FSMC </periph>
+      </clock>
+
+      <clock name = "SDIOCLK">
+        <periph> SDIO </periph>
+      </clock>
+
+      <prescaler name = "SYSTICK" div = "8">
+        <clock name = "SYSTICK_CLK">
+          <periph> systick </periph>
+        </clock>
+      </prescaler>
+
+      <prescaler name = "APB1" div_min = "1" div_max = "16">
+        <clock name = "PCLK1" f_max_mhz = "36">
+          <periph> UART4 </periph>
+          <!-- TODO: add remaining peripherals -->
+        </clock>
+
+        <prescaler name = "TIM" mul_min = "1" mul_max = "2">
+          <clock name = "TIMxCLK" f_max_mhz = "72">
+            <periph> TIM2 </periph>
+            <periph> TIM3 </periph>
+            <periph> TIM4 </periph>
+            <periph> TIM5 </periph>
+            <periph> TIM6 </periph>
+            <periph> TIM7 </periph>
+            <periph> TIM12 </periph>
+            <periph> TIM13 </periph>
+            <periph> TIM14 </periph>
+          </clock>
+        </prescaler>
+
+      </prescaler>
+
+      <prescaler name = "APB2" div_min = "1" div_max = "16">
+        <clock name = "PCLK2" f_max_mhz = "72">
+          <periph> GPIOA </periph>
+          <!-- TODO: add remaining peripherals -->
+        </clock>
+
+        <prescaler name = "TIM" mul_min = "1" mul_max = "2">
+          <clock name = "TIMxCLK" f_max_mhz = "72">
+            <periph> TIM1 </periph>
+            <periph> TIM8 </periph>
+            <periph> TIM9 </periph>
+            <periph> TIM10 </periph>
+            <periph> TIM11 </periph>
+          </clock>
+        </prescaler>
+
+        <prescaler name = "ADC" div_min = "2" div_max = "8">
+          <clock name = "ADCCLK" f_max_mhz = "14">
+            <periph> ADC1 </periph>
+            <periph> ADC2 </periph>
+            <periph> ADC3 </periph>
+          </clock>
+        </prescaler>
+
+      </prescaler>
+
+      <prescaler name = "SDIO" div = "2">
+        <clock name = "HCLK/2" f_max_mhz = "36">
+          <periph> SDIO_AHB </periph>
+        </clock>
+      </prescaler>
+
+    </prescaler>
+  </clock>
+</clock_tree>
