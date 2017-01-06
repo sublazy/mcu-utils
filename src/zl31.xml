@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<board name = "zl31">
+
+  <leds>
+    <led name = "LED1" port = "B" pin = "1" polarity = "negative" />
+    <led name = "LED2" port = "B" pin = "2" polarity = "negative" />
+  </leds>
+
+  <tty
+      name = "tty1"
+      tx_port = "A" tx_pin  = "9"
+      rx_port = "A" rx_pin  = "10"
+      clocks = "not my business"
+      />
+
+</board>
