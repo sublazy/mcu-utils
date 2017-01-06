@@ -1,0 +1,32 @@
+.- Copyright (c) 2016, 2017 Cezary Sałbut
+.-
+.- This file is subject to the terms of the MIT license. If a copy of
+.- the MIT license was not distributed with this file, You can obtain
+.- one at https://opensource.org/licenses/MIT.
+.-
+.-
+\
+.license = file.slurp("txt/license_short.txt")
+.gen_warning = file.slurp("txt/gen_warning.txt")
+.output "include/led_$(board.name).h"
+\
+/* $(license:block,no) */
+
+/* $(gen_warning:no,justify,block%-66s) */
+// TODO: List the files used for generation.
+
+#ifndef LED_$(board.NAME)_H
+#define LED_$(board.NAME)_H
+
+typedef enum led_id_$(board.name) {
+.       for board->leds
+        $(NAME),
+.       endfor
+        NOF_LEDS
+} led_id_t;
+
+void led_platform_init(void);
+
+#endif // LED_$(board.NAME)_H
+\
+.close
