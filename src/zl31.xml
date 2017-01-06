@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <board name = "zl31">
 
+<!--
+    This file contains information determined by hardware design and
+    assembly of a specific board.
+
+    What belongs here:
+    - components, blocks and features that are present on the board
+    - connections between components
+    - fixed parameters important for software, like oscillator frequency
+
+    What does not belong here:
+    - parameters configurable from software, like UART baud rate.
+
+    If a board has different assembly variants (e.g. different MCU versions
+    or lack of certain components), separate variants of this model should
+    be created as well.
+-->
+
   <leds>
     <led name = "LED1" port = "B" pin = "1" polarity = "negative" />
     <led name = "LED2" port = "B" pin = "2" polarity = "negative" />
@@ -12,5 +29,14 @@
       rx_port = "A" rx_pin  = "10"
       clocks = "not my business"
       />
+
+  <!-- todo: -->
+  <!-- - crystal -->
+  <!-- - joystick -->
+  <!-- - potentiometer -->
+  <!-- - SPI connector -->
+  <!-- - I2C connector -->
+
+  <!-- - display: not in this file -->
 
 </board>
