@@ -214,6 +214,9 @@ clean:
 	@printf "  CLEAN\n"
 	$(Q) rm -rf $(BUILD_SUBDIRS)
 
+code:
+	@gsl -script:src/led_gen src/zl31.xml
+
 stylecheck: $(STYLECHECKFILES:=.stylecheck)
 styleclean: $(STYLECHECKFILES:=.styleclean)
 
@@ -305,7 +308,7 @@ endif
 $(BUILD_SUBDIRS):
 	$(Q)mkdir -p $(BUILD_SUBDIRS)
 
-.PHONY: all clean stylecheck styleclean create_subdirs \
+.PHONY: all clean code stylecheck styleclean create_subdirs \
 	target_elf target_bin target_hex target_srec target_list
 
 
